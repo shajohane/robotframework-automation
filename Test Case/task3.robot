@@ -56,12 +56,10 @@ buy lower contract
     Wait Until Element Is Visible    ${high_low}    10
     Click Element    ${high_low}
     Wait Until Element Is Visible    ${duration}    10
-    # Double Click Element    ${duration}
     Clear Element Text    ${duration}
     Input Text    ${duration}    2
     Wait Until Element Is Visible    ${toggle_payout}    5
     Click Element    ${toggle_payout}
-    # Click Element    ${amount}
     Press Keys    ${amount}    CTRL+A+BACKSPACE
     Input Text    ${amount}    15.50
     Wait Until Element Is Enabled    ${purchase_btn}    10

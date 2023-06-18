@@ -24,11 +24,12 @@ ${barrier_input}     //*[@id="dt_barrier_1_input"]
 ${toggle_payout}    //*[@id="dc_payout_toggle_item"]
 ${amount}     //*[@name="amount"]
 ${purchase_btn}    //*[@id="dt_purchase_put_button"]
+${prompt_barrier}    //*[@id="trade_container"]/div[4]/div/fieldset[3]/div[2]/div/span
 
 
 
 *** Test Cases ***
-buy lower contract
+check relative barrier error
     Open Browser    https://app.deriv.com    chrome
     Set Window Size    1280    1024
     Wait Until Page Contains Element    dt_login_button    10
@@ -57,12 +58,14 @@ buy lower contract
     Wait Until Element Is Visible    ${high_low}    10
     Click Element    ${high_low}
     Wait Until Element Is Visible    ${duration}    10
-    Clear Element Text    ${duration}
+    Press Keys    ${duration}    CTRL+A+BACKSPACE
     Input Text    ${duration}    2
     Press Keys    ${barrier_input}    CTRL+A+BACKSPACE
     Input Text    ${barrier_input}    -0.1
+    Wait Until Element Is Visible    ${prompt_barrier}    10
+    Page Should Contain Element    xpath=//*[@id="trade_container"]/div[4]/div/fieldset[3]/div[2]/div/span
+    Press Keys    ${amount}    CTRL+A+BACKSPACE
+    Input Text    ${amount}    10
     Wait Until Element Is Visible    ${toggle_payout}    5
     Click Element    ${toggle_payout}
-    Page Should Contain Element    //*[text()="Contracts more than 24 hours in duration would need an absolute barrier"]
-    # Wait Until Element Is Enabled    ${purchase_btn}    10
-    # Click Element    ${purchase_btn}
+    Element Should Be Disabled    ${purchase_btn}
